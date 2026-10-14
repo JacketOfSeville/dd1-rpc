@@ -3,6 +3,10 @@
 A standalone Python app that provides Rich Presence on Discord.
 Does so by tracking the player's save state.
 
+## Pre-built usage
+
+A pre-built .exe is avaiable [here for download](https://github.com/JacketOfSeville/dd1-rpc/releases/tag/release) with a pre-baked Discord activity with the needed resources for out-of-the-box usage.
+
 ## Compiling and using
 
 1. Create an application at the [Discord Developer Portal](https://discord.com/developers/applications) and copy it's Client ID.
