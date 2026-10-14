@@ -1,1 +1,4 @@
 /samples
+.env
+/dist
+src/dd1_rpc/_baked.py

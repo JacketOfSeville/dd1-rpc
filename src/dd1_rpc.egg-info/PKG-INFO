@@ -1,0 +1,7 @@
+Metadata-Version: 2.4
+Name: dd1-rpc
+Version: 0.1.0
+Summary: Discord Rich Presence companion for Darkest Dungeon (Steam)
+Requires-Python: >=3.10
+Requires-Dist: pypresence>=4.3
+Requires-Dist: psutil>=5.9
