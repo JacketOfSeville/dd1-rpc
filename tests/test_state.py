@@ -107,8 +107,8 @@ class RaidTests(unittest.TestCase):
             (51, "Pushing forward with a dimming light (51%)"),
             (50, "Paranoid with the settling shadows (50%)"),
             (26, "Paranoid with the settling shadows (26%)"),
-            (25, "Venturing into the unknown shadows (25%)"),
-            (1, "Venturing into the unknown shadows (1%)"),
+            (25, "Venturing into the dark (25%)"),
+            (1, "Venturing into the dark (1%)"),
             (0, "In pitch darkness... black as Death (0%)"),
         ]:
             act = build_activity(self.game, raid(torchlight=torch))

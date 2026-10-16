@@ -1,9 +1,7 @@
 # Maps decoded Darkest Dungeon saves to a Discord Rich Presence activity.
 # Everything here is pure: it takes the decoded save dicts (see ``dson.load``) and
 # returns an :class:`Activity`, so it can be tested without the game or Discord.
-# 
-# Everything here is pure: it takes the decoded save dicts (see ``dson.load``) and
-# returns an :class:`Activity`, so it can be tested without the game or Discord.
+
 
 from __future__ import annotations
 
