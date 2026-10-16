@@ -33,8 +33,22 @@ QUEST_VERBS: dict[str, str] = {
     "gather": "Gathering in",
     "wave": "Defending",
     "farm_bloodcrate": "Collecting bloodcrates in",
+    "inventory_activate": "Activating objects in",
 }
 DEFAULT_VERB = "Delving into"
+
+# Goal id -> verb phrase, for quest types whose goal says more than the type does.
+GOAL_VERBS: dict[str, str] = {
+    "gather_grain": "Gathering grain in",
+    "gather_holy_relic": "Retrieving a holy relic in",
+    "gather_medicines": "Gathering medicines in",
+    "gather_shipments": "Gathering shipments in",
+    "inventory_activate_beacons": "Lighting the beacons in",
+    "inventory_activate_wards": "Activating the wards in",
+    "inventory_activate_animalistic_shrine": "Activating the animalistic shrine in",
+    "inventory_activate_corrupted_altar": "Activating the corrupted altar in",
+    "inventory_activate_infected_corpse": "Investigating the infected corpse in",
+}
 
 # Quest length (1-3 in random quests; plot quests can go higher) -> display name.
 QUEST_LENGTHS: dict[int, str] = {1: "Short", 2: "Medium", 3: "Long"}
@@ -82,7 +96,7 @@ TORCH_TIERS: tuple[tuple[int, str], ...] = (
     (76, "Sweeping with radiant light"),
     (51, "Pushing forward with a dimming light"),
     (26, "Paranoid with the settling shadows"),
-    (1, "Venturing into the unknown shadows"),
+    (1, "Venturing into the dark"),
     (0, "In pitch darkness... black as Death"),
 )
 
@@ -189,6 +203,11 @@ def _raid_activity(game: Mapping[str, Any], raid: Mapping[str, Any] | None) -> A
         parts.append(light)
 
     verb = QUEST_VERBS.get(quest_type, DEFAULT_VERB)
+    goals = instance.get("goal_ids")
+    for goal in goals if isinstance(goals, (list, tuple)) else (goals.values() if isinstance(goals, Mapping) else ()):
+        if goal in GOAL_VERBS:
+            verb = GOAL_VERBS[goal]
+            break
     if (raid or {}).get("inbattle"):
         details = _battle_text(raid or {}, name)
     else:
