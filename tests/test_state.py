@@ -71,6 +71,18 @@ class RaidTests(unittest.TestCase):
         self.assertEqual(act.large_text, "The Weald · Long · Veteran")
         self.assertEqual(act.key, "raid:generated_3")
 
+    def test_goal_specific_verbs(self):
+        def details(qtype, goals):
+            r = raid()
+            r["raid_instance"].update(type=qtype, goal_ids=goals)
+            return build_activity(self.game, r).details
+
+        self.assertEqual(details("gather", ["gather_grain"]), "Gathering grain in the Weald")
+        self.assertEqual(details("inventory_activate", ["inventory_activate_beacons"]), "Lighting the beacons in the Weald")
+        self.assertEqual(details("inventory_activate", {"0": "inventory_activate_wards"}), "Activating the wards in the Weald")
+        self.assertEqual(details("inventory_activate", ["unknown"]), "Activating objects in the Weald")
+        self.assertEqual(details("gather", []), "Gathering in the Weald")
+
     def test_in_battle(self):
         act = build_activity(self.game, raid(inbattle=True))
         self.assertEqual(act.details, "Battling in the Weald")
@@ -95,8 +107,8 @@ class RaidTests(unittest.TestCase):
             (51, "Pushing forward with a dimming light (51%)"),
             (50, "Paranoid with the settling shadows (50%)"),
             (26, "Paranoid with the settling shadows (26%)"),
-            (25, "Venturing into the unknown shadows (25%)"),
-            (1, "Venturing into the unknown shadows (1%)"),
+            (25, "Venturing into the dark (25%)"),
+            (1, "Venturing into the dark (1%)"),
             (0, "In pitch darkness... black as Death (0%)"),
         ]:
             act = build_activity(self.game, raid(torchlight=torch))
