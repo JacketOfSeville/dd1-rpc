@@ -48,9 +48,14 @@ GOAL_VERBS: dict[str, str] = {
     "inventory_activate_infected_corpse": "Investigating the infected corpse in",
 }
 
-# Quest length (1-3 in random quests; plot quests can go higher) -> display name.
-QUEST_LENGTHS: dict[int, str] = {1: "Short", 2: "Medium", 3: "Long"}
-EPIC_LENGTH = "Epic"
+# Quest length -> display name.
+QUEST_LENGTHS: dict[int, str] = {
+    1: "Short",
+    2: "Medium",
+    3: "Long",
+    4: "Exhausting",
+    5: "Epic",
+}
 
 # Quest difficulty level -> display name.
 QUEST_DIFFICULTIES: dict[int, str] = {1: "Apprentice", 3: "Veteran", 5: "Champion", 6: "Darkest"}
@@ -286,7 +291,7 @@ def light_text(raid: Mapping[str, Any] | None) -> str:
 def _length_name(length: Any) -> str:
     if not isinstance(length, int):
         return ""
-    return QUEST_LENGTHS.get(length) or (EPIC_LENGTH if length > max(QUEST_LENGTHS) else "")
+    return QUEST_LENGTHS.get(length, "")
 
 
 def dungeon_display(dungeon_id: str) -> tuple[str, str]:

@@ -30,18 +30,26 @@ class ProfileTests(unittest.TestCase):
     def test_no_profile(self):
         self.assertIsNone(saves.active_profile(self.root))
 
-    def test_raid_path_prefers_profile_root(self):
+    def test_raid_path_prefers_raid_save_folder(self):
         profile = self.root / "profile_0"
         touch(profile / saves.RAID_FILE)
-        touch(profile / "plot_x" / saves.RAID_FILE)
-        self.assertEqual(saves.raid_path(profile, {"raid_save": "plot_x"}), profile / saves.RAID_FILE)
-
-    def test_raid_path_uses_raid_save_folder(self):
-        profile = self.root / "profile_0"
         touch(profile / "plot_x" / saves.RAID_FILE)
         self.assertEqual(
             saves.raid_path(profile, {"raid_save": "plot_x"}), profile / "plot_x" / saves.RAID_FILE
         )
+
+    def test_raid_path_falls_back_to_profile_root(self):
+        profile = self.root / "profile_0"
+        touch(profile / saves.RAID_FILE)
+        self.assertEqual(saves.raid_path(profile, {"raid_save": "plot_x"}), profile / saves.RAID_FILE)
+
+    def test_raid_path_accepts_trailing_slash(self):
+        profile = self.root / "profile_0"
+        touch(profile / "plot_x" / saves.RAID_FILE)
+        for value in ("plot_x/", "plot_x\\"):
+            self.assertEqual(
+                saves.raid_path(profile, {"raid_save": value}), profile / "plot_x" / saves.RAID_FILE
+            )
 
     def test_raid_path_rejects_path_traversal(self):
         profile = self.root / "profile_0"

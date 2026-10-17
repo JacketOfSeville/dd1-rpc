@@ -59,15 +59,15 @@ def active_profile(save_dir: Path) -> Path | None:
 
 
 def raid_path(profile: Path, game: dict[str, Any]) -> Path | None:
-    """Where the current raid is saved: the profile root, or the folder named by ``raid_save``."""
-    candidates = [profile / RAID_FILE]
+    """Where the current raid is saved: the folder named by ``raid_save``, else the profile root."""
+    candidates = []
     raid_save = game.get("raid_save")
-    if (
-        isinstance(raid_save, str)
-        and raid_save not in ("", ".", "..")
-        and Path(raid_save).name == raid_save
-    ):
-        candidates.append(profile / raid_save / RAID_FILE)
+    if isinstance(raid_save, str):
+        # The game stores plot raid folders with a trailing slash, e.g. ``plot_crimson_court_2/``.
+        raid_save = raid_save.strip().rstrip("/\\")
+        if raid_save not in ("", ".", "..") and Path(raid_save).name == raid_save:
+            candidates.append(profile / raid_save / RAID_FILE)
+    candidates.append(profile / RAID_FILE)
     return next((p for p in candidates if p.is_file()), None)
 
 

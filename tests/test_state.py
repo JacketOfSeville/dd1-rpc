@@ -146,7 +146,9 @@ class RaidTests(unittest.TestCase):
         for length, difficulty, expected in [
             (1, 1, "The Weald · Short · Apprentice"),
             (2, 5, "The Weald · Medium · Champion"),
+            (4, 6, "The Weald · Exhausting · Darkest"),
             (5, 6, "The Weald · Epic · Darkest"),
+            (6, 6, "The Weald · Darkest"),
             (None, 3, "The Weald · Veteran"),
             (2, 4, "The Weald · Medium"),
         ]:
