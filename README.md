@@ -5,7 +5,7 @@ Does so by tracking the player's save state.
 
 ## Pre-built usage
 
-A pre-built .exe is avaiable [here for download](https://github.com/JacketOfSeville/dd1-rpc/releases/tag/release) with a pre-baked Discord activity with the needed resources for out-of-the-box usage.
+A pre-built .exe is avaiable [here for download](https://github.com/JacketOfSeville/dd1-rpc/releases) with a pre-baked Discord activity with the needed resources for out-of-the-box usage.
 
 ## Compiling and using
 
