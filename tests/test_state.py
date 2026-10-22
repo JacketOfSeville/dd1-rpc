@@ -137,6 +137,17 @@ class RaidTests(unittest.TestCase):
             act = build_activity({"inraid": True, "raiddungeon": "farm"}, data)
             self.assertEqual(act.state, expected)
 
+    def test_farmstead_live_torch_color_overrides_starting_light(self):
+        data = raid(
+            raid_instance={"id": "farm", "dungeon": "farm", "torch_setting": "wave_farm"},
+            wave_logic={"torchColor": "wave_transition_a"},
+            inbattle=True,
+            battle={"round": 1},
+        )
+        act = build_activity({"inraid": True, "raiddungeon": "farm"}, data)
+        self.assertEqual(act.details, "Battling in the Farmstead (Round 1)")
+        self.assertEqual(act.state, "The distortion gleams a crimson light")
+
     def test_unknown_torch_setting_falls_back_to_percentage(self):
         instance = {"id": "q", "dungeon": "weald", "torch_setting": "modded_light"}
         act = build_activity(self.game, raid(raid_instance=instance))

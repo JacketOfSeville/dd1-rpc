@@ -67,7 +67,7 @@ Fields are clipped to 128 characters (Discord's limit). Empty fields are omitted
 - **Length**: 1/2/3/4/5 → Short/Medium/Long/Exhausting/Epic. The sample `plot_crimson_court_2/persist.raid.json` has length 5 and is the Epic Courtyard Viscount expedition; the game's English localization confirms length 4 is Exhausting.
 - **Difficulty**: 1/3/5/6 → Apprentice/Veteran/Champion/Darkest.
 - **Game mode** (small image, from `persist.game.json` `game_mode`): `base` → Darkest, `radiant` → Radiant, `new_game_plus` → Stygian, `bloodmoon` → Bloodmoon. All four values are confirmed from real saves.
-- **Torch text**: tiers 76-100 "Sweeping with radiant light", 51-75 "Pushing forward with a dimming light", 26-50 "Paranoid with the settling shadows", 1-25 "Venturing into the dark", 0 "In pitch darkness... black as Death", each followed by `(N%)`. Special lights show fixed text without a percentage: `bloodlight` (Courtyard) and the Farmstead `wave_*` settings (`SPECIAL_LIGHTS`).
+- **Torch text**: tiers 76-100 "Sweeping with radiant light", 51-75 "Pushing forward with a dimming light", 26-50 "Paranoid with the settling shadows", 1-25 "Venturing into the dark", 0 "In pitch darkness... black as Death", each followed by `(N%)`. Special lights show fixed text without a percentage: `bloodlight` (Courtyard) and the Farmstead `wave_*` settings (`SPECIAL_LIGHTS`). The active Farmstead effect comes from `wave_logic.torchColor`; the profile_0 Farmstead combat sample has `wave_transition_a` (Gleaming).
 - **Boss detection**: a battle enemy whose `monster_class` is in `BOSS_CLASSES` (every monster tagged `boss` in the game's `*.info.darkest` files, including DLC). The name shown is the in-game name stored in the save.
 
 ## Save files read
@@ -109,7 +109,5 @@ $env:MYPYPATH="src"; mypy src tests --ignore-missing-imports         # types
 ## Known limitations and unverified assumptions
 
 - Round number is shown as saved (`battle.round`); whether it is 1-based in every case is unconfirmed.
-- Farmstead mid-raid lighting is read from a guessed `torch_settings_id` field; `wave_pre_time_and_space` mapped to the Miasma text is a guess.
-- Confirmed: lengths 4 (Exhausting) and 5 (Epic), and the `radiant`, `new_game_plus` and `bloodmoon` game modes.
 - Only Windows with the Steam version and a locally running Discord client are supported.
 - The unsigned `.exe` may trigger SmartScreen or antivirus warnings.

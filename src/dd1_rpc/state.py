@@ -252,11 +252,16 @@ def _battle_text(raid: Mapping[str, Any], place: str) -> str:
 def current_torch_setting(raid: Mapping[str, Any] | None) -> str:
     """The id of the active torch setting (e.g. ``bloodlight``), or an empty string for the default.
 
-    The game switches it mid-raid in the Farmstead, so a ``torch_settings_id`` anywhere in the
-    raid save wins over the quest's starting ``raid_instance.torch_setting``.
+    The Farmstead stores its active effect as ``wave_logic.torchColor``; other live
+    ``torch_settings_id`` values take precedence over the quest's starting setting.
     """
     if not raid:
         return ""
+    wave_logic = raid.get("wave_logic")
+    if isinstance(wave_logic, Mapping):
+        live_wave_setting = wave_logic.get("torchColor")
+        if isinstance(live_wave_setting, str) and live_wave_setting:
+            return live_wave_setting
     live = _find_key(raid, "torch_settings_id")
     if isinstance(live, str) and live:
         return live
