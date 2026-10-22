@@ -137,6 +137,17 @@ class RaidTests(unittest.TestCase):
             act = build_activity({"inraid": True, "raiddungeon": "farm"}, data)
             self.assertEqual(act.state, expected)
 
+    def test_farmstead_live_torch_color_overrides_starting_light(self):
+        data = raid(
+            raid_instance={"id": "farm", "dungeon": "farm", "torch_setting": "wave_farm"},
+            wave_logic={"torchColor": "wave_transition_a"},
+            inbattle=True,
+            battle={"round": 1},
+        )
+        act = build_activity({"inraid": True, "raiddungeon": "farm"}, data)
+        self.assertEqual(act.details, "Battling in the Farmstead (Round 1)")
+        self.assertEqual(act.state, "The distortion gleams a crimson light")
+
     def test_unknown_torch_setting_falls_back_to_percentage(self):
         instance = {"id": "q", "dungeon": "weald", "torch_setting": "modded_light"}
         act = build_activity(self.game, raid(raid_instance=instance))
@@ -146,7 +157,9 @@ class RaidTests(unittest.TestCase):
         for length, difficulty, expected in [
             (1, 1, "The Weald · Short · Apprentice"),
             (2, 5, "The Weald · Medium · Champion"),
+            (4, 6, "The Weald · Exhausting · Darkest"),
             (5, 6, "The Weald · Epic · Darkest"),
+            (6, 6, "The Weald · Darkest"),
             (None, 3, "The Weald · Veteran"),
             (2, 4, "The Weald · Medium"),
         ]:
